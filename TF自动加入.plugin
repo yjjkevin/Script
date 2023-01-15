@@ -1,0 +1,14 @@
+#!name=
+#!desc=
+#!homepage=
+#!author=
+#!icon=
+
+[Script]
+
+cron "*/1 * * * * *" script-path=https://raw.githubusercontent.com/chengkongyiban/shadowrocket/main/scripts/Auto_Join_TF.js, tag=#Auto join TF 
+http-request ^https:\/\/testflight\.apple\.com\/v3\/accounts/.*\/apps$ script-path=https://raw.githubusercontent.com/chengkongyiban/shadowrocket/main/scripts/TF_keys.js,requires-body=0, tag=TF信息获取 
+
+[MITM]
+
+hostname = testflight.apple.com
