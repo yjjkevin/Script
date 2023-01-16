@@ -1,8 +1,8 @@
 #!name=TFAutoJoin
-#!desc=
+#!desc=TF自动加入
 #!homepage=
 #!author=yjjkevin
-#!icon=
+#!icon=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/testflight.png
 
 [Script]
 
