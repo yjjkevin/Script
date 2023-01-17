@@ -1,0 +1,17 @@
+name: 12123token
+desc: 12123token
+http:
+  script:
+    - match: ^https:\/\/miniappcsfw\.122\.gov\.cn:8443\/openapi\/invokeApi\/business\/biz
+      name: 12123_Token
+      type: request
+      require-body: true
+      timeout: 30
+      max-size: 0
+  mitm:
+    - "miniappcsfw.122.gov.cn:8443"
+
+script-providers:
+  12123_Token:
+    url: https://raw.githubusercontent.com/FoKit/Scripts/main/scripts/get_12123_token.js
+    interval: 86400
