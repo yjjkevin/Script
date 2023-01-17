@@ -1,0 +1,37 @@
+#!name=3-高德地图去广告
+#!desc=需全新应用
+
+# 修改自@ddgksf2013 https://raw.githubusercontent.com/ddgksf2013/Rewrite/master/AdBlock/Amap.conf
+
+# 重要提醒：qx使用请务必开启解析器并out掉amdc这条，然后手动在分流中加入
+# HOST-SUFFIX,amdc.m.taobao.com,REJECT
+# qx配置示例如下，请手动去掉 # 号
+# https://raw.githubusercontent.com/kokoryh/Script/master/Surge/module/amap.sgmodule#ntf=0&out=amdc, tag=高德地图去广告, update-interval=172800, opt-parser=true, enabled=true
+
+[Rule]
+DOMAIN-SUFFIX,amdc.m.taobao.com,REJECT
+# 由于surge需特殊方法匹配域名下ip，因此用如下规则
+URL-REGEX,\/amdc\/mobileDispatch,REJECT
+
+[URL Rewrite]
+# 通用广告请求
+^https?:\/\/m5\.amap\.com\/ws\/asa\/ads_attribution - reject
+
+[Map Local]
+# 搜索框 | 左下天气
+^https?:\/\/m5\.amap\.com\/ws\/(shield\/scene\/recommend|valueadded\/weather) data="https://raw.githubusercontent.com/kokoryh/Script/master/data/blank_dict.json"
+# Tip请求，如招聘代驾的广告等
+^https?:\/\/m5-zb\.amap\.com\/ws\/boss\/order_web\/\w{8}_information data="https://raw.githubusercontent.com/kokoryh/Script/master/data/blank.txt"
+
+[Script]
+# 搜索框热词 | 附近页面 | 我的页面
+http-response ^https?:\/\/m5\.amap\.com\/ws\/shield\/(search\/(new_hotword|nearbyrec_smart)|dsp\/profile\/index\/nodefaas) requires-body=1,script-path=https://raw.githubusercontent.com/kokoryh/Script/master/js/amap.js
+# 开屏广告 | 首页底部
+http-response ^https?:\/\/m5\.amap\.com\/ws\/(valueadded\/alimama\/splash_screen|faas\/amap-navigation\/main-page) requires-body=1,script-path=https://raw.githubusercontent.com/kokoryh/Script/master/js/amap.js
+# 打车页面
+http-response ^https?:\/\/m5-zb\.amap\.com\/ws\/promotion-web\/resource requires-body=1,script-path=https://raw.githubusercontent.com/kokoryh/Script/master/js/amap.js
+# 首页顶部横幅
+http-response ^https?:\/\/sns\.amap\.com\/ws\/msgbox\/pull requires-body=1,script-path=https://raw.githubusercontent.com/kokoryh/Script/master/js/amap.js
+
+[MITM]
+hostname = %INSERT% m5.amap.com, m5-zb.amap.com, sns.amap.com
